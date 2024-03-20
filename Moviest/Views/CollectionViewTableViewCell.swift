@@ -12,13 +12,15 @@ class CollectionViewTableViewCell: UITableViewCell {
 
     static let identifier = "CollectionViewTableViewCell"
     
+    private var titles: [Title] = [Title]()
+    
     private let collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout();
         //Size of each cell
         layout.itemSize = CGSize(width: 140, height: 200)
         layout.scrollDirection = .horizontal
         let collecttionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collecttionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collecttionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
         return collecttionView
     }()
     
@@ -40,20 +42,30 @@ class CollectionViewTableViewCell: UITableViewCell {
         collectionView.frame = contentView.bounds
     }
     
-    
+    public func configure(with titles: [Title]) {
+            self.titles = titles
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView.reloadData()
+        }
+    }
 }
 
 //num, color of cells in each cellcollection
 extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return titles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .blue
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.identifier, for: indexPath) as? TitleCollectionViewCell else{
+            return UICollectionViewCell()
+            }
+        
+        guard let model = titles[indexPath.row].poster_path else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with:model)
         return cell
+
     }
-    
-    
 }
