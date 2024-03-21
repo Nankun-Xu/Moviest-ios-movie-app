@@ -44,13 +44,14 @@ class CollectionViewTableViewCell: UITableViewCell {
     
     public func configure(with titles: [Title]) {
             self.titles = titles
+        //title array is updated async so need a reload
             DispatchQueue.main.async { [weak self] in
                 self?.collectionView.reloadData()
         }
     }
 }
 
-//num, color of cells in each cellcollection
+//num, content of cells in each cellcollection
 extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return titles.count
@@ -61,6 +62,7 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
             return UICollectionViewCell()
             }
         
+        //image path from database
         guard let model = titles[indexPath.row].poster_path else {
             return UICollectionViewCell()
         }
