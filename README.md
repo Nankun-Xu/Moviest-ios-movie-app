@@ -3,7 +3,7 @@
 
 Moviest is an iOS app designed to be your go-to companion for discovering, exploring, and enjoying movies.
 
-![Simulator GIF](Simulator Screen Recording - iPhone 15 Pro - 2024-05-01 at 18.07.54.gif)
+![Simulator GIF](https://github.com/Nankun-Xu/Moviest-ios-movie-app/blob/main/Simulator%20Screen%20Recording%20-%20iPhone%2015%20Pro%20-%202024-05-01%20at%2018.07.54.gif)
 
 ## Features
 
